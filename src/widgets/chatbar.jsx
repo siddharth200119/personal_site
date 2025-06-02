@@ -1,28 +1,20 @@
 import { useState } from "react";
 import { Send } from "lucide-react"; // Optional: use Heroicons, Lucide, or SVG
 
-export default function ChatBar({ isChatActive, onChatActivate }) {
+export default function ChatBar({ isChatActive, onMessageSend }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const handleSend = () => {
     if (message.trim() === "") return;
+
+    if (onMessageSend) {
+      onMessageSend(message); // Call the new prop
+    }
+
     // Add message to messages array
     setMessages([...messages, { id: Date.now(), text: message, sender: 'user' }]);
     setMessage(""); // Clear input field
-  };
-
-  const handleInputChange = (e) => {
-    setMessage(e.target.value);
-    if (!isChatActive && e.target.value.length === 1) { // Call onChatActivate on first key press
-      onChatActivate();
-    }
-  };
-
-  const handleInputFocus = () => {
-    if (!isChatActive) {
-      onChatActivate();
-    }
   };
 
   const handleKeyDown = (e) => {
@@ -48,9 +40,9 @@ export default function ChatBar({ isChatActive, onChatActivate }) {
           placeholder="Ask anything about me"
           className="flex-1 bg-transparent outline-none text-sm p-2 text-gray-100"
           value={message}
-          onChange={handleInputChange}
+          onChange={(e) => setMessage(e.target.value)} // Simplified onChange
           onKeyDown={handleKeyDown}
-          onFocus={handleInputFocus} // Call onChatActivate on focus
+          // onFocus removed
         />
         <button
           onClick={handleSend}

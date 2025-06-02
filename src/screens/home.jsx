@@ -4,8 +4,13 @@ import Chatbar from "../widgets/chatbar";
 export default function HomeScreen() {
     const [isChatActive, setIsChatActive] = useState(false);
 
-    const handleChatActivate = () => {
-        setIsChatActive(true);
+    // Renamed from handleChatActivate
+    // This function is called when the user sends their first message
+    const handleUserMessageSent = () => {
+        if (!isChatActive) { // Only activate if not already active
+            setIsChatActive(true);
+        }
+        // Potentially do other things with the message content here in the future
     };
 
     return (
@@ -17,7 +22,10 @@ export default function HomeScreen() {
                     <div className="lg:min-h-20 min-h-10"></div>
                 </div>
             )}
-            <Chatbar isChatActive={isChatActive} onChatActivate={handleChatActivate} />
+            <Chatbar 
+                isChatActive={isChatActive} 
+                onMessageSend={handleUserMessageSent} // Prop renamed
+            />
         </div>
     );
 }

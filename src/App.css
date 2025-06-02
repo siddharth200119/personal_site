@@ -6,10 +6,12 @@
   left: 0;
   right: 0;
   width: 100%; /* Ensure it spans the full width */
-  padding: 0.5rem 1rem; /* Vertical padding for the bar, horizontal for content */
+  /* Adjusted padding: primarily for horizontal, or if input-area itself doesn't have enough.
+     Let's use 0.5rem for consistency, assuming input-area provides most needed padding. */
+  padding: 0.5rem; 
   box-sizing: border-box;
-  height: auto;
-  transition: all 0.5s ease-in-out;
+  height: auto; /* Height should wrap content */
+  transition: all 0.3s ease-in-out; /* Faster transition */
   z-index: 1000;
 }
 
@@ -37,7 +39,7 @@
   flex-direction: column;
   /* Overall padding for the active screen is removed here, will be applied to message-display-area and input-area's container part */
   box-sizing: border-box;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out; /* Faster transition, ensure background also transitions */
   z-index: 1000;
   /* Reset any transforms that might have been applied for entry animations if added later */
   transform: translateY(0); 
@@ -67,6 +69,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem; /* Space between messages */
+  opacity: 0; /* Initially hidden for transition */
+}
+
+.chat-screen-active .message-display-area {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 0.15s; /* Delayed opacity transition */
 }
 
 .message {
