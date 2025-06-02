@@ -1,0 +1,118 @@
+/* In src/App.css */
+
+.chatbar-inactive {
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  width: 100%; /* Ensure it spans the full width */
+  padding: 0.5rem 1rem; /* Vertical padding for the bar, horizontal for content */
+  box-sizing: border-box;
+  height: auto;
+  transition: all 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+/* The input-area within chatbar-inactive retains its original styling mostly from Tailwind,
+   but we ensure its max-width and centering.
+   The bg-gray-700, rounded-xl, text-gray-100, px-4 py-2, shadow-sm are from its Tailwind classes.
+*/
+.chatbar-inactive .input-area {
+  max-width: 768px; /* lg:w-3xl */
+  margin-left: auto;
+  margin-right: auto;
+  /* Tailwind classes like bg-gray-700, rounded-xl, etc., will provide the rest */
+}
+
+.chat-screen-active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111827; /* bg-gray-900 from Tailwind */
+  display: flex;
+  flex-direction: column;
+  /* Overall padding for the active screen is removed here, will be applied to message-display-area and input-area's container part */
+  box-sizing: border-box;
+  transition: all 0.5s ease-in-out;
+  z-index: 1000;
+  /* Reset any transforms that might have been applied for entry animations if added later */
+  transform: translateY(0); 
+}
+
+/* Styling for the input-area when chat is active */
+.chat-screen-active .input-area {
+  width: 100%;
+  padding: 1rem; /* Padding around the input box container */
+  box-sizing: border-box;
+  margin-top: auto; /* Pushes to the bottom of the flex container */
+}
+
+/* This is the inner div of input-area that has the background and rounded corners */
+.chat-screen-active .input-area > div { 
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+  /* Tailwind classes like bg-gray-700, rounded-xl applied to this div in JSX will style it */
+}
+
+
+.message-display-area {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 0 1rem; /* Padding, no bottom padding to be flush with input area if desired, or add some */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Space between messages */
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  border-radius: 1rem; /* More rounded bubbles */
+  max-width: 70%;
+  line-height: 1.5;
+  word-wrap: break-word; /* Ensure long words don't overflow */
+}
+
+.message.user {
+  background-color: #2563eb; /* Tailwind blue-600 */
+  color: white;
+  align-self: flex-end;
+  /* margin-left: auto; /* This is redundant due to align-self on flex container */
+}
+
+.message.bot { /* Style for bot messages, if any */
+  background-color: #4b5563; /* Tailwind gray-600 */
+  color: white;
+  align-self: flex-start;
+  /* margin-right: auto; /* This is redundant due to align-self on flex container */
+}
+
+/* Custom Scrollbar for message-display-area */
+.message-display-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.message-display-area::-webkit-scrollbar-track {
+  background: transparent; /* Or a very dark gray like #1f2937 */
+}
+
+.message-display-area::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* Tailwind gray-600 */
+  border-radius: 4px;
+  border: 2px solid transparent; /* Creates padding around thumb */
+  background-clip: padding-box; 
+}
+
+.message-display-area::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280; /* Tailwind gray-500 */
+}
+
+/* For Firefox */
+.message-display-area {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 transparent; /* thumb and track */
+}
